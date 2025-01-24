@@ -1,0 +1,150 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - thank
+  - affirm
+  - deny
+  - bot_challenge
+  - back_to_menu
+  - faq
+  - tower_ict
+  - tower_finance
+  - tower_hc
+  - tower_procurement
+  - account_access
+  - app_software
+  - network_connect
+  - digsign
+  - digsign_one
+  - vpn
+  - wifi
+  - setting_vpn
+  - check_ip
+  - connection_problem
+  - non_erp
+  - holding_problem
+  - offline_number
+  - tatacara_poffice
+  - phone
+  - telepon_sljj
+  - telepon_internal
+  - telepon_sli
+  - inform_agen
+  - status_ticket
+  - inform_ticket
+
+actions:
+  - validate_ticket_form
+  - action_tower
+  - action_one
+  - action_account
+  - action_app
+  - action_network
+  - action_thanks
+  - action_demo
+  - action_main
+  - action_connect
+  - action_confirm
+  - action_ticket
+  - action_help
+  - action_agent
+  - action_ask_ticket
+  - action_reset_ticket
+  - action_handle
+  - action_fallback
+
+slots:
+  ticket:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: ticket_form
+          requested_slot: ticket
+  rating:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: survey_form
+          requested_slot: rating
+  comment:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: survey_form
+          requested_slot: comment
+
+forms:
+  ticket_form:
+    required_slots:
+    - ticket
+  survey_form:
+    required_slots:
+    - rating
+    - comment
+
+responses:
+  utter_greet:
+  - text: "Hai Sobat Shared Services, perkenalkan Saya SIERA (Shared Services Intelligent Virtual Assistant) yang siap membantu Kamu menelusuri informasi yang dibutuhkan seputar layanan Shared Services."
+
+  utter_ask_comment:
+  - text: "Berikan komentarmu atas pelayanan yang SIERA berikan :)"
+
+  utter_end:
+  - text: "Terima kasih Sobat atas masukan yang diberikan untuk membantu SIERA menjadi lebih baik :)"
+
+  utter_digsign:
+  - text: "Berikut informasi tentang Digital Signature yang sering ditanyakan:\n1. Bagaimana cara request Digital Signature?"
+
+  utter_digsign_one:
+  - text: "Ada 3 jenis Digital Signature, yaitu DS Peruri (untuk pekerja setara manager ke atas), DS BSSN (untuk pekerja setara Ast. Man. kebawah) dan Psign (untuk semua pekerja) sebagai berikut:\na. Digital Signature BSSN menggunakan aplikasi Panther versi Desktop, dengan TTE Tersertifikasi oleh Badan Sertifikat Elektronik\nb. Jasa Penyelenggara Sertifikasi Elektronik Indonesia yang dipilih oleh pertamina adalah Badan Siber dan Sandi Negara (BSSN) dan Peruri\nc. Psign Proses Registrasi dan Generate Sertifikat Digital (tutorial terlampir)\nUntuk Digital Signature BSSN dan Peruri, user bisa request digital signature melalui MySSC - Form."
+
+  utter_vpn:
+  - text: "Berikut informasi tentang VPN yang sering ditanyakan:\n1. Bagaimana cara setting VPN di laptop atau handphone?"
+
+  utter_vpn_one:
+  - text: "Silahkan mengunjungi link berikut http://ptm.id/PTMVIA untuk memperoleh panduan instalasi VPN Aruba VIA."
+
+  utter_wifi:
+  - text: "Berikut informasi tentang WiFi yang sering ditanyakan:\n1. Bagaimana cara melakukan pengecekan IP address laptop saya?\n2. Bagaimana jika terkendala koneksi P_6C?"
+
+  utter_wifi_one:
+  - text: "1. Search Command Prompt (cmd)\n2. Ketik ipconfig\n3. Selanjutnya akan muncul informasi IP address Anda."
+
+  utter_wifi_two:
+  - text: "1. Pastikan password e-mail tidak expired\n2. Check wifi dengan SSID P-6C\n3. Klik Network & Internet Setting\n4. Pilih menu Wi-Fi\n5. Klik Manage Known Networks\n6. Klik P-6C lalu pilih Forget\n7. Pada control panel pilih network and sharing center\n8. Klik set up a new connection or network\n9. Pilih Manually connect to a wireless network\n10. Isi informasi berikut\na. Network name : P_6C\nb. Security type : WPA2-Enterprise\n11. Klik Next, pilih Change Connection Setting -> security -> settings\n12. Uncheck Verify the server's identity by validating the certificate\n13. Klik configure, uncheck Automatically use my windows logon name and password, kemudian klik OK dan kembali ke menu security lalu pilih advance setting\n14. Check specify authentication mode, selanjutnya klik Ok\n15. Koneksikan wifi P_6C sesuai dengan username dan password email anda"
+
+  utter_nonerp:
+  - text: "Berikut informasi tentang Non ERP yang sering ditanyakan:\n1. Apa yang saya lakukan jika saya sekretaris dan jabatan atasan saya belum berubah pada saat perpindahan P-Office 2.0 holding dan sub holding?\n2. Bagaimanakah jika saya memerlukan nomor offline?\n3. Dimanakah saya dapat mengetahui tata cara penggunaan P_Office 2.0?"
+
+  utter_nonerp_one:
+  - text: "Melakukan permohonan tiket via MySSC. Incident tiket dengan menginformasikan nama dan jabatan atasan, KBO, serta nama perusahaan saat ini."
+
+  utter_nonerp_two:
+  - text: "Role diberikan kepada sekretaris. Pengajuan nomor offline akan di setujui oleh fungsi QSKM holding dan subholding. Request pada P-Office dengan menu Document dan pilih Offline Number klik button + add Offline Number. Sistem menampilkan Form Request Nomor Offline klik Send. Pengajuan nomor offline akan di setujui oleh admin approval nomor offline."
+
+  utter_nonerp_three:
+  - text: "Silahkan akses melalui https://docs.poffice.pertamina.com"
+
+  utter_phone:
+  - text: "Berikut informasi tentang Phone yang sering ditanyakan:\n1. Bagaimana pekerja di kantor pusat membutuhkan telepon SLJJ untuk kebutuhan khusus?\n2. Siapa yang berhak mendapatkan fasilitas telepon internal, lokal dan SLJJ?\n3. Siapa yang berhak mendapatkan fasilitas telepon SLI?"
+
+  utter_phone_one:
+  - text: "Pekerja dapat membuat request melalui MySSC dengan http://myssc.pertamina.com dengan menggunakan form telepon dengan memilih tipe permintaan penambahan fitur dan memilih fasilitas tambahan 00 persetujuan akan sampai level VP."
+
+  utter_phone_two:
+  - text: "Sesuai Surat Keputusan dengan nomor Kpts-045/C00000/2020-S0 tgl. 10 Desember 2020 Perihal Standarisasi Sarana Teknologi Informasi. Diberikan kepada pekerja dengan jenjang kepangkatan Manager, Vice President, Senior Vice President dan Direksi."
+
+  utter_phone_three:
+  - text: "Sesuai Surat Keputusan dengan nomor Kpts-045/C00000/2020-S0 tgl. 10 Desember 2020 Perihal Standarisasi Sarana Teknologi Informasi. Diberikan kepada Senior Vice President dan Direksi."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

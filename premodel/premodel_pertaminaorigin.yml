@@ -1,0 +1,824 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - thank
+  - affirm
+  - deny
+  - bot_challenge
+  - back_to_menu
+  - faq
+  - tower_ict
+  - tower_finance
+  - tower_hc
+  - tower_procurement
+  - account_access
+  - app_software
+  - network_connect
+  - digsign
+  - digsign_one
+  - vpn
+  - wifi
+  - setting_vpn
+  - check_ip
+  - connection_problem
+  - non_erp
+  - holding_problem
+  - offline_number
+  - tatacara_poffice
+  - phone
+  - telepon_sljj
+  - telepon_internal
+  - telepon_sli
+  - inform_agen
+  - status_ticket
+  - inform_ticket
+
+actions:
+  - validate_ticket_form
+  - action_tower
+  - action_one
+  - action_account
+  - action_app
+  - action_network
+  - action_thanks
+  - action_demo
+  - action_main
+  - action_connect
+  - action_confirm
+  - action_ticket
+  - action_help
+  - action_agent
+  - action_ask_ticket
+  - action_reset_ticket
+  - action_handle
+  - action_fallback
+
+slots:
+  ticket:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: ticket_form
+          requested_slot: ticket
+  rating:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: survey_form
+          requested_slot: rating
+  comment:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: survey_form
+          requested_slot: comment
+
+forms:
+  ticket_form:
+    required_slots:
+    - ticket
+  survey_form:
+    required_slots:
+    - rating
+    - comment
+
+responses:
+  utter_greet:
+  - text: "Hai Sobat Shared Services, perkenalkan Saya SIERA (Shared Services Intelligent Virtual Assistant) yang siap membantu Kamu menelusuri informasi yang dibutuhkan seputar layanan Shared Services."
+
+  utter_ask_comment:
+  - text: "Berikan komentarmu atas pelayanan yang SIERA berikan :)"
+
+  utter_end:
+  - text: "Terima kasih Sobat atas masukan yang diberikan untuk membantu SIERA menjadi lebih baik :)"
+
+  utter_digsign:
+  - text: "Berikut informasi tentang Digital Signature yang sering ditanyakan:\n1. Bagaimana cara request Digital Signature?"
+
+  utter_digsign_one:
+  - text: "Ada 3 jenis Digital Signature, yaitu DS Peruri (untuk pekerja setara manager ke atas), DS BSSN (untuk pekerja setara Ast. Man. kebawah) dan Psign (untuk semua pekerja) sebagai berikut:\na. Digital Signature BSSN menggunakan aplikasi Panther versi Desktop, dengan TTE Tersertifikasi oleh Badan Sertifikat Elektronik\nb. Jasa Penyelenggara Sertifikasi Elektronik Indonesia yang dipilih oleh pertamina adalah Badan Siber dan Sandi Negara (BSSN) dan Peruri\nc. Psign Proses Registrasi dan Generate Sertifikat Digital (tutorial terlampir)\nUntuk Digital Signature BSSN dan Peruri, user bisa request digital signature melalui MySSC - Form."
+
+  utter_vpn:
+  - text: "Berikut informasi tentang VPN yang sering ditanyakan:\n1. Bagaimana cara setting VPN di laptop atau handphone?"
+
+  utter_vpn_one:
+  - text: "Silahkan mengunjungi link berikut http://ptm.id/PTMVIA untuk memperoleh panduan instalasi VPN Aruba VIA."
+
+  utter_wifi:
+  - text: "Berikut informasi tentang WiFi yang sering ditanyakan:\n1. Bagaimana cara melakukan pengecekan IP address laptop saya?\n2. Bagaimana jika terkendala koneksi P_6C?"
+
+  utter_wifi_one:
+  - text: "1. Search Command Prompt (cmd)\n2. Ketik ipconfig\n3. Selanjutnya akan muncul informasi IP address Anda."
+
+  utter_wifi_two:
+  - text: "1. Pastikan password e-mail tidak expired\n2. Check wifi dengan SSID P-6C\n3. Klik Network & Internet Setting\n4. Pilih menu Wi-Fi\n5. Klik Manage Known Networks\n6. Klik P-6C lalu pilih Forget\n7. Pada control panel pilih network and sharing center\n8. Klik set up a new connection or network\n9. Pilih Manually connect to a wireless network\n10. Isi informasi berikut\na. Network name : P_6C\nb. Security type : WPA2-Enterprise\n11. Klik Next, pilih Change Connection Setting -> security -> settings\n12. Uncheck Verify the server's identity by validating the certificate\n13. Klik configure, uncheck Automatically use my windows logon name and password, kemudian klik OK dan kembali ke menu security lalu pilih advance setting\n14. Check specify authentication mode, selanjutnya klik Ok\n15. Koneksikan wifi P_6C sesuai dengan username dan password email anda"
+
+  utter_nonerp:
+  - text: "Berikut informasi tentang Non ERP yang sering ditanyakan:\n1. Apa yang saya lakukan jika saya sekretaris dan jabatan atasan saya belum berubah pada saat perpindahan P-Office 2.0 holding dan sub holding?\n2. Bagaimanakah jika saya memerlukan nomor offline?\n3. Dimanakah saya dapat mengetahui tata cara penggunaan P_Office 2.0?"
+
+  utter_nonerp_one:
+  - text: "Melakukan permohonan tiket via MySSC. Incident tiket dengan menginformasikan nama dan jabatan atasan, KBO, serta nama perusahaan saat ini."
+
+  utter_nonerp_two:
+  - text: "Role diberikan kepada sekretaris. Pengajuan nomor offline akan di setujui oleh fungsi QSKM holding dan subholding. Request pada P-Office dengan menu Document dan pilih Offline Number klik button + add Offline Number. Sistem menampilkan Form Request Nomor Offline klik Send. Pengajuan nomor offline akan di setujui oleh admin approval nomor offline."
+
+  utter_nonerp_three:
+  - text: "Silahkan akses melalui https://docs.poffice.pertamina.com"
+
+  utter_phone:
+  - text: "Berikut informasi tentang Phone yang sering ditanyakan:\n1. Bagaimana pekerja di kantor pusat membutuhkan telepon SLJJ untuk kebutuhan khusus?\n2. Siapa yang berhak mendapatkan fasilitas telepon internal, lokal dan SLJJ?\n3. Siapa yang berhak mendapatkan fasilitas telepon SLI?"
+
+  utter_phone_one:
+  - text: "Pekerja dapat membuat request melalui MySSC dengan http://myssc.pertamina.com dengan menggunakan form telepon dengan memilih tipe permintaan penambahan fitur dan memilih fasilitas tambahan 00 persetujuan akan sampai level VP."
+
+  utter_phone_two:
+  - text: "Sesuai Surat Keputusan dengan nomor Kpts-045/C00000/2020-S0 tgl. 10 Desember 2020 Perihal Standarisasi Sarana Teknologi Informasi. Diberikan kepada pekerja dengan jenjang kepangkatan Manager, Vice President, Senior Vice President dan Direksi."
+
+  utter_phone_three:
+  - text: "Sesuai Surat Keputusan dengan nomor Kpts-045/C00000/2020-S0 tgl. 10 Desember 2020 Perihal Standarisasi Sarana Teknologi Informasi. Diberikan kepada Senior Vice President dan Direksi."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+# ======================== RULES & STORY =====================
+rules:
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_greet
+  - action: action_main
+
+- rule: submit form survey
+  condition:
+  - active_loop: survey_form
+  steps:
+  - action: survey_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_end
+  - action: action_help
+  - action: action_restart
+
+stories:
+- story: greet path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_main
+
+- story: faq path
+  steps:
+  - intent: faq
+  - action: action_tower
+
+- story: tower ict path
+  steps:
+  - intent: tower_ict
+  - action: action_one
+
+- story: tower finance path
+  steps:
+  - intent: tower_finance
+  - action: action_demo
+
+- story: tower HC path
+  steps:
+  - intent: tower_hc
+  - action: action_demo
+
+- story: tower procurement path
+  steps:
+  - intent: tower_procurement
+  - action: action_demo
+
+- story: account & access path
+  steps:
+  - intent: account_access
+  - action: action_account
+
+- story: digital signature path
+  steps:
+  - intent: digsign
+  - action: utter_digsign
+
+- story: digital signature one path
+  steps:
+  - intent: digsign_one
+  - action: utter_digsign_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: vpn path
+  steps:
+  - intent: vpn
+  - action: utter_vpn
+
+- story: vpn one path
+  steps:
+  - intent: setting_vpn
+  - action: utter_vpn_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: wifi path
+  steps:
+  - intent: wifi
+  - action: utter_wifi
+
+- story: wifi one path
+  steps:
+  - intent: check_ip
+  - action: utter_wifi_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: wifi two path
+  steps:
+  - intent: connection_problem
+  - action: utter_wifi_two
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: app & software path
+  steps:
+  - intent: app_software
+  - action: action_app
+
+- story: non erp path
+  steps:
+  - intent: non_erp
+  - action: utter_nonerp
+
+- story: non erp one path
+  steps:
+  - intent: holding_problem
+  - action: utter_nonerp_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: non erp two path
+  steps:
+  - intent: offline_number
+  - action: utter_nonerp_two
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: non erp three path
+  steps:
+  - intent: tatacara_poffice
+  - action: utter_nonerp_three
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: network, voice & connectivity path
+  steps:
+  - intent: network_connect
+  - action: action_network
+
+- story: phone path
+  steps:
+  - intent: phone
+  - action: utter_phone
+
+- story: phone one path
+  steps:
+  - intent: telepon_sljj
+  - action: utter_phone_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: phone two path
+  steps:
+  - intent: telepon_internal
+  - action: utter_phone_two
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: phone three path
+  steps:
+  - intent: telepon_sli
+  - action: utter_phone_three
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: user_satisfaction checkpoint yes
+  steps:
+  - checkpoint: user_satisfaction
+  - intent: affirm
+  - action: action_thanks
+  - action: survey_form
+  - active_loop: survey_form
+
+- story: user_satisfaction checkpoint no
+  steps:
+  - checkpoint: user_satisfaction
+  - intent: deny
+  - action: action_connect
+  - checkpoint: ask_agent
+
+- story: fallback path
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+  - checkpoint: ask_agent
+
+- story: ask_agent checkpoint yes
+  steps:
+  - checkpoint: ask_agent
+  - intent: affirm
+  - action: action_agent
+
+- story: ask_agent checkpoint no
+  steps:
+  - checkpoint: ask_agent
+  - intent: deny
+  - action: action_thanks
+  - action: survey_form
+  - active_loop: survey_form
+
+- story: chat agent path
+  steps:
+  - intent: inform_agen
+  - action: action_agent
+
+- story: cek ticket status
+  steps:
+  - intent: inform_ticket
+  - action: action_reset_ticket
+  - action: ticket_form
+  - active_loop: ticket_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_handle
+  - action: action_ticket
+  - checkpoint: check_ticket_again
+
+- story: check_ticket_again yes
+  steps:
+  - checkpoint: check_ticket_again
+  - intent: affirm
+  - action: action_reset_ticket
+  - action: ticket_form
+  - active_loop: ticket_form
+
+- story: check_ticket_again no
+  steps:
+  - checkpoint: check_ticket_again
+  - intent: deny
+  - action: action_main
+
+- story: back to beginning
+  steps:
+  - intent: back_to_menu
+  - action: utter_greet
+  - action: action_main
+
+# -------------------------------------------------------------
+# ======================== NLU ==============================
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hei
+    - hai
+    - halo
+    - hi
+    - oi
+    - oy
+    - cuy
+    - coy
+    - woy
+    - kang
+    - kak
+    - bang
+    - om
+    - tante
+    - bu
+    - mas
+    - pak
+    - selamat pagi
+    - pagi
+    - selamat malam
+    - selamat malem
+    - malam
+    - malem
+    - apa kabar
+    - hey bot
+    - halo bot
+    - pagi bot
+    - siang bot
+    - malem bot
+    - mlm bot
+    - halo pak
+    - halo mas
+    - halo om
+    - halo bu
+    - halo tante
+    - halo mba
+    - halo bang
+    - halo kak
+    - met pagi
+    - met malam
+    - met sore
+    - met siang
+    - selamat sore
+    - sore
+    - selamat siang
+    - siang
+    - apa kabar
+    - Halo. Selamat pagi.
+    - Halo. Selamat siang.
+    - Halo. Selamat sore.
+    - Halo. Selamat malam.
+
+- intent: goodbye
+  examples: |
+    - dah
+    - dadah
+    - sampai jumpa
+    - sampai jumpa lagi
+    - sampai ketemu lagi
+    - bye
+    - goodbye
+    - bye bye
+    - bye bot
+    - see you
+    - see u
+    - selamat tinggal
+    - cabut dulu
+    - aku off dulu
+    - aku pergi
+    - selesai
+    - stop
+
+- intent: thank
+  examples: |
+    - terima kasih banyak
+    - terimakasih banyak
+    - terimakasih byk
+    - terima kasih
+    - terimakasih
+    - makasih
+    - makasih banyak
+    - makasih byk
+    - makasih loh
+    - thanks
+    - thank you
+    - thanks a lot
+    - thank u
+    - ok thanks
+    - thnks
+    - tks
+    - thx
+    - thx bgt
+
+- intent: affirm
+  examples: |
+    - mau
+    - yes
+    - ya
+    - yha
+    - iya
+    - iy
+    - ok
+    - woke
+    - ok deh
+    - oke deh
+    - memang
+    - tentu
+    - tentu saja
+    - boleh juga
+    - boleh jg
+    - leh jg
+    - benar
+    - bener
+    - bnr
+    - ho oh
+    - betul
+    - betol
+    - yap
+    - boleh
+    - ok boleh
+    - bolehlah
+    - saya setuju
+    - gw setuju
+    - memang seperti itu
+
+- intent: deny
+  examples: |
+    - tidak
+    - tdk
+    - no
+    - jangan
+    - jangan begitu
+    - jangan gt
+    - janganlah
+    - bukan
+    - kurasa bukan
+    - ga
+    - gak
+    - ngga
+    - gak pernah
+    - gak mau
+    - gak mau sama sekali
+    - gak mau samsek
+    - gak juga
+    - tidak mau
+    - saya tidak berpikir begitu
+    - aku tidak berpikir begitu
+    - gak suka
+    - gak mungkin
+    - tidak mungkin
+    - tidak juga
+    - ogah
+
+- intent: bot_challenge
+  examples: |
+    - ini bot?
+    - ini ai?
+    - ini bot beneran?
+    - ini robot?
+    - kamu chatbot?
+    - kamu asli?
+    - ini beneran?
+    - ini manusia?
+    - ini orang?
+    - apakah kamu bot?
+    - apakah kamu chatbot?
+    - apakah kamu manusia?
+    - apakah kamu orang?
+    - saya bicara dengan bot?
+    - saya bicara dengan manusia?
+    - ini manusia apa bot?
+
+- intent: back_to_menu
+  examples: |
+    - Menu Utama
+    - kembali
+    - kembali ke menu utama
+    - mau ke menu utama
+    - back
+
+- intent: faq
+  examples: |
+    - faq
+    - mau faq dong
+    - butuh faq
+    - pengen faq
+    - coba liat faqnya
+    - mau liat faq
+
+- intent: tower_ict
+  examples: |
+    - ICT
+    - Tower ICT
+    - ke tower ict
+    - mau ke tower ICT
+    - mau di tower ICT dong
+    - info seputar ict
+    - info ict
+
+- intent: tower_finance
+  examples: |
+    - Finance
+    - Tower Finance
+    - ke tower finance
+    - mau ke tower finance
+    - mau di tower finance dong
+    - info seputar finance
+    - info finance
+
+- intent: tower_hc
+  examples: |
+    - HC
+    - Tower HC
+    - ke tower HC
+    - mau ke tower HC
+    - mau di tower HC dong
+    - info seputar HC
+    - info HC
+
+- intent: tower_procurement
+  examples: |
+    - Procurement
+    - Tower Procurement
+    - mau ke tower procurement
+    - mau di tower procurement dong
+    - info seputar procurement
+    - info procurement
+
+- intent: account_access
+  examples: |
+    - Account & Access
+    - Account and Access
+    - Layanan Account & Access
+    - Layanan Account and Access
+    - akun dan akses
+    - account dan akses
+    - account dan access
+
+- intent: app_software
+  examples: |
+    - Application & Software
+    - Application and Software
+    - Layanan Application and Software
+    - Layanan Application & Software
+    - app dan software
+    - app & software
+
+- intent: network_connect
+  examples: |
+    - Network, Voice & Connectivity
+    - Network, Voice, Connect
+    - Network, Voice & Connect
+    - Layanan Network, Voice and Connectivity
+    - network voice connectivity
+    - network voice dan connection
+
+- intent: digsign
+  examples: |
+    - Digital Signature
+    - Info tentang Digital Signature
+    - info mengenai digital signature
+    - info digital signature
+
+- intent: digsign_one
+  examples: |
+    - Req. Digital Signature
+    - Bagaimana cara request Digital Signature?
+    - mau request digital signature dong
+    - gimana cara request tanda tangan digital
+    - request digital signature
+    - request tanda tangan digital
+    - mau request tanda tangan online
+
+- intent: vpn
+  examples: |
+    - VPN
+    - Info tentang VPN
+    - info mengenai vpn
+    - info vpn
+
+- intent: wifi
+  examples: |
+    - Wi-Fi
+    - wifi
+    - Info tentang Wi-Fi
+    - info mengenai wifi
+    - info wifi
+
+- intent: setting_vpn
+  examples: |
+    - Setting VPN
+    - Bagaimana cara setting VPN di laptop atau handphone?
+    - gimana setting vpn di laptop
+    - gimana pake vpn di hp
+    - gimana setting vpn di hp
+    - mau setting vpn di laptop
+    - setting vpn di hape
+    - gimana cara vpn di laptop
+    - gmn cara vpn di hp
+    - cara mengatur vpn
+
+- intent: check_ip
+  examples: |
+    - gimana cara melakukan pengecekan ip address laptop
+    - cara cek ip laptop gimana
+    - Bagaimana cara melakukan pengecekan IP address laptop saya?
+    - bantu cek ip laptop
+    - cek ip laptop
+    - cek ip address
+    - gimana cara cek alamat ip
+    - bantu cek alamat ip dong
+
+- intent: connection_problem
+  examples: |
+    - Bagaimana jika saya terkendala koneksi P_6C?
+    - saya terkendala koneksi P-6C
+    - bantuin saya ada kendala koneksi P 6C
+    - bantuin saya konek ke P_6C dong
+    - gimana cara connect ke P_6C
+    - tolong bantu saya connect ke P_6C
+    - saya gabisa connect ke P_6C
+    - saya ada kendala koneksi P_6C
+    - bantuin kendala error P_6C
+    - gimana nih saya kendala koneksi wifi
+    - bantuin dong wifi saya error
+
+- intent: non_erp
+  examples: |
+    - Non ERP
+    - Info tentang Non ERP
+    - info mengenai Non ERP
+    - info nonerp
+
+- intent: holding_problem
+  examples: |
+    - Apa yang saya lakukan jika saya sekretaris dan jabatan atasan saya belum berubah pada saat perpindahan P-Office 2.0 holding dan Sub holding?
+    - jabatan atasan belom berubah pas holding sub holding
+    - transisi holding sub holdingnya belom bisa
+    - saya sekretaris dan boss saya jabatannya belom berubah pada perpindahan holding subholding
+    - jabatan atasan saya belum berubah saat perpindahan poffice 2 holding dan sub-holding
+    - pas perpindahan p-office 2.0 holding dan sub holding jabatan atasan saya gak berubah
+    - saya sekretaris saya harus gimana jabatan boss saya belom berubah pas holding
+    - tolong bantu saya jabatan atasan belom ganti pas transisi holding sub-holding
+
+- intent: offline_number
+  examples: |
+    - Bagaimanakah jika saya memerlukan nomor offline?
+    - saya perlu nomor offline
+    - perlu nomor offline
+    - gimana jika saya perlu nomor offline
+    - gimana kalo saya butuh no offline
+    - saya butuh no offline
+    - butuh nomor offline
+
+- intent: tatacara_poffice
+  examples: |
+    - Dimanakah saya dapat mengetahui tata cara penggunaan P_Office 2.0?
+    - dimana saya tau tata cara make P_Office 2.0?
+    - tata cara penggunaan p office 2.0
+    - kasih tau cara gunain poffice 2.0 dong
+    - dimana saya tau cara gunain p office 2.0
+    - dimana cara pake poffice 2.0
+    - tata cara pemakaian poffice 2.0
+
+- intent: phone
+  examples: |
+    - Phone
+    - Info tentang Phone
+    - info mengenai phone
+    - info phone
+
+- intent: telepon_sljj
+  examples: |
+    - Bagaimana pekerja di kantor pusat membutuhkan telepon SLJJ untuk kebutuhan khusus?
+    - gimana pekerja telepon sljj untuk kebutuhan khusus
+    - gimana pekerja di pusat telepon sljj
+    - bagaimana karyawan telepon sljj
+    - kebutuhan khusus telepon sljj
+    - gimana pekerja butuh telepon sljj
+
+- intent: telepon_internal
+  examples: |
+    - Siapa yang berhak mendapatkan fasilitas telepon internal, lokal dan SLJJ?
+    - yang berhak telepon internal, lokal, sljj
+    - fasilitas telpon internal lokal dan sljj
+    - siapa yang boleh telepon internal, lokal, sljj
+    - siapa aja yg boleh telpon internal lokal dan sljj
+    - siapa aja yang berhak dapet fasilitas telpon internal lokal sljj
+
+- intent: telepon_sli
+  examples: |
+    - Siapa yang berhak mendapatkan fasilitas telepon SLI?
+    - yang berhak telepon sli
+    - fasilitas telpon sli
+    - siapa yang boleh telepon sli
+    - siapa aja yg boleh telpon sli
+    - siapa aja yang berhak dapet fasilitas telpon sli
+
+- intent: inform_agen
+  examples: |
+    - Terhubung ke Agen
+    - Konsultasi langsung dengan Agen
+    - Ingin menghubungi Agen
+    - agennya kemana
+    - ke cs dong
+    - mana csnya
+    - mau ke customer service
+    - Chat dengan Agent
+    - mau chat ke agent
+
+- intent: status_ticket
+  examples: |
+    - MOB0000002420001
+    - Tiket MOB0000002420001
+    - MOB0000002420002
+    - Tiket MOB0000002420002
+    - MOB0000002420003
+    - Tiket MOB0000002420003
+    - MOB0000002420004
+    - Tiket MOB0000002420004
+    - MOB0000002420005
+    - Tiket MOB0000002420005
+
+- intent: inform_ticket
+  examples: |
+    - Cek Tiket
+    - mau liat tiket dong
+    - mau check ticket dong
+    - check ticket
+    - tiket gw apa aja
+
+# -----------------------------------------------------------

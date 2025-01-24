@@ -1,0 +1,53 @@
+version: "3.1"
+
+rules:
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_greet
+  - action: action_main
+
+- rule: submit form survey
+  condition:
+  - active_loop: survey_form
+  steps:
+  - action: survey_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_end
+  - action: action_help
+  - action: action_restart
+
+# - rule: cek ticket status activate
+#   steps:
+#   - intent: inform_ticket
+#   - action: action_reset_ticket
+#   - action: ticket_form
+#   - active_loop: ticket_form
+
+# - rule: cek ticket status submit
+#   condition:
+#   - active_loop: ticket_form
+#   steps:
+#   - action: ticket_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: action_handle
+#   - action: action_ticket
+
+# - rule: cek ticket status
+#   steps:
+#   - intent: status_ticket
+#   - action: ticket_form
+#   - active_loop: ticket_form
+#   - slot_was_set:
+#     - requested_slot: ticket
+#   - slot_was_set:
+#     - ticket
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: action_handle
+#   - action: action_ticket

@@ -1,0 +1,216 @@
+version: "3.1"
+
+stories:
+- story: greet path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_main
+
+- story: faq path
+  steps:
+  - intent: faq
+  - action: action_tower
+
+- story: tower ict path
+  steps:
+  - intent: tower_ict
+  - action: action_one
+
+- story: tower finance path
+  steps:
+  - intent: tower_finance
+  - action: action_demo
+
+- story: tower HC path
+  steps:
+  - intent: tower_hc
+  - action: action_demo
+
+- story: tower procurement path
+  steps:
+  - intent: tower_procurement
+  - action: action_demo
+
+- story: account & access path
+  steps:
+  - intent: account_access
+  - action: action_account
+
+- story: digital signature path
+  steps:
+  - intent: digsign
+  - action: utter_digsign
+
+- story: digital signature one path
+  steps:
+  - intent: digsign_one
+  - action: utter_digsign_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: vpn path
+  steps:
+  - intent: vpn
+  - action: utter_vpn
+
+- story: vpn one path
+  steps:
+  - intent: setting_vpn
+  - action: utter_vpn_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: wifi path
+  steps:
+  - intent: wifi
+  - action: utter_wifi
+
+- story: wifi one path
+  steps:
+  - intent: check_ip
+  - action: utter_wifi_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: wifi two path
+  steps:
+  - intent: connection_problem
+  - action: utter_wifi_two
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: app & software path
+  steps:
+  - intent: app_software
+  - action: action_app
+
+- story: non erp path
+  steps:
+  - intent: non_erp
+  - action: utter_nonerp
+
+- story: non erp one path
+  steps:
+  - intent: holding_problem
+  - action: utter_nonerp_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: non erp two path
+  steps:
+  - intent: offline_number
+  - action: utter_nonerp_two
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: non erp three path
+  steps:
+  - intent: tatacara_poffice
+  - action: utter_nonerp_three
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: network, voice & connectivity path
+  steps:
+  - intent: network_connect
+  - action: action_network
+
+- story: phone path
+  steps:
+  - intent: phone
+  - action: utter_phone
+
+- story: phone one path
+  steps:
+  - intent: telepon_sljj
+  - action: utter_phone_one
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: phone two path
+  steps:
+  - intent: telepon_internal
+  - action: utter_phone_two
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: phone three path
+  steps:
+  - intent: telepon_sli
+  - action: utter_phone_three
+  - action: action_confirm
+  - checkpoint: user_satisfaction
+
+- story: user_satisfaction checkpoint yes
+  steps:
+  - checkpoint: user_satisfaction
+  - intent: affirm
+  - action: action_thanks
+  - action: survey_form
+  - active_loop: survey_form
+
+- story: user_satisfaction checkpoint no
+  steps:
+  - checkpoint: user_satisfaction
+  - intent: deny
+  - action: action_connect
+  - checkpoint: ask_agent
+
+- story: fallback path
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+  - checkpoint: ask_agent
+
+- story: ask_agent checkpoint yes
+  steps:
+  - checkpoint: ask_agent
+  - intent: affirm
+  - action: action_agent
+
+- story: ask_agent checkpoint no
+  steps:
+  - checkpoint: ask_agent
+  - intent: deny
+  - action: action_thanks
+  - action: survey_form
+  - active_loop: survey_form
+
+- story: chat agent path
+  steps:
+  - intent: inform_agen
+  - action: action_agent
+
+- story: cek ticket status
+  steps:
+  - intent: inform_ticket
+  - action: action_reset_ticket
+  - action: ticket_form
+  - active_loop: ticket_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_handle
+  - action: action_ticket
+  - checkpoint: check_ticket_again
+
+- story: check_ticket_again yes
+  steps:
+  - checkpoint: check_ticket_again
+  - intent: affirm
+  - action: action_reset_ticket
+  - action: ticket_form
+  - active_loop: ticket_form
+
+- story: check_ticket_again no
+  steps:
+  - checkpoint: check_ticket_again
+  - intent: deny
+  - action: action_main
+
+- story: back to beginning
+  steps:
+  - intent: back_to_menu
+  - action: utter_greet
+  - action: action_main
