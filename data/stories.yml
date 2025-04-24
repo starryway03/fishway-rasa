@@ -5,37 +5,36 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
-  - action: action_main
 
 - story: faq path
   steps:
   - intent: faq
-  - action: action_tower
+  - action: utter_faq
 
 - story: tower ict path
   steps:
   - intent: tower_ict
-  - action: action_one
+  - action: utter_tower_ict
 
 - story: tower finance path
   steps:
   - intent: tower_finance
-  - action: action_demo
+  - action: utter_tower_finance
 
 - story: tower HC path
   steps:
   - intent: tower_hc
-  - action: action_demo
+  - action: utter_tower_hc
 
 - story: tower procurement path
   steps:
   - intent: tower_procurement
-  - action: action_demo
+  - action: utter_tower_procurement
 
 - story: account & access path
   steps:
   - intent: account_access
-  - action: action_account
+  - action: utter_account_access
 
 - story: digital signature path
   steps:
@@ -46,8 +45,6 @@ stories:
   steps:
   - intent: digsign_one
   - action: utter_digsign_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: vpn path
   steps:
@@ -58,8 +55,6 @@ stories:
   steps:
   - intent: setting_vpn
   - action: utter_vpn_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: wifi path
   steps:
@@ -70,20 +65,16 @@ stories:
   steps:
   - intent: check_ip
   - action: utter_wifi_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: wifi two path
   steps:
   - intent: connection_problem
   - action: utter_wifi_two
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: app & software path
   steps:
   - intent: app_software
-  - action: action_app
+  - action: utter_app_software
 
 - story: non erp path
   steps:
@@ -94,27 +85,21 @@ stories:
   steps:
   - intent: holding_problem
   - action: utter_nonerp_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: non erp two path
   steps:
   - intent: offline_number
   - action: utter_nonerp_two
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: non erp three path
   steps:
   - intent: tatacara_poffice
   - action: utter_nonerp_three
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: network, voice & connectivity path
   steps:
   - intent: network_connect
-  - action: action_network
+  - action: utter_network
 
 - story: phone path
   steps:
@@ -125,92 +110,28 @@ stories:
   steps:
   - intent: telepon_sljj
   - action: utter_phone_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: phone two path
   steps:
   - intent: telepon_internal
   - action: utter_phone_two
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: phone three path
   steps:
   - intent: telepon_sli
   - action: utter_phone_three
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
-- story: user_satisfaction checkpoint yes
+- story: phone three path
   steps:
-  - checkpoint: user_satisfaction
-  - intent: affirm
-  - action: action_thanks
-  - action: survey_form
-  - active_loop: survey_form
-
-- story: user_satisfaction checkpoint no
-  steps:
-  - checkpoint: user_satisfaction
-  - intent: deny
-  - action: action_connect
-  - checkpoint: ask_agent
-
-- story: fallback path
-  steps:
-  - intent: nlu_fallback
-  - action: action_fallback
-  - checkpoint: ask_agent
-
-- story: ask_agent checkpoint yes
-  steps:
-  - checkpoint: ask_agent
-  - intent: affirm
-  - action: action_agent
-
-- story: ask_agent checkpoint no
-  steps:
-  - checkpoint: ask_agent
-  - intent: deny
-  - action: action_thanks
-  - action: survey_form
-  - active_loop: survey_form
-
-- story: chat agent path
-  steps:
-  - intent: inform_agen
-  - action: action_agent
-
-- story: cek ticket status
-  steps:
-  - intent: inform_ticket
-  - action: action_reset_ticket
-  - action: ticket_form
-  - active_loop: ticket_form
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  - action: action_handle
-  - action: action_ticket
-  - checkpoint: check_ticket_again
-
-- story: check_ticket_again yes
-  steps:
-  - checkpoint: check_ticket_again
-  - intent: affirm
-  - action: action_reset_ticket
-  - action: ticket_form
-  - active_loop: ticket_form
-
-- story: check_ticket_again no
-  steps:
-  - checkpoint: check_ticket_again
-  - intent: deny
-  - action: action_main
+  - intent: thank
+  - action: utter_thanks
 
 - story: back to beginning
   steps:
   - intent: back_to_menu
   - action: utter_greet
-  - action: action_main
+
+- story: fallback path
+  steps:
+  - intent: nlu_fallback
+  - action: utter_fallback

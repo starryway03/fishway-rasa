@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="py3810" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="py3810" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="rasa3.6-ta" project-jdk-type="Python SDK" />
 </project>

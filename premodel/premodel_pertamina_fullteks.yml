@@ -1,11 +1,41 @@
 version: "3.1"
+recipe: default.v1
+language: id
+pipeline:
+- name: WhitespaceTokenizer
+- name: RegexFeaturizer
+- name: LexicalSyntacticFeaturizer
+- name: CountVectorsFeaturizer
+- name: CountVectorsFeaturizer
+  analyzer: char_wb
+  min_ngram: 1
+  max_ngram: 4
+- name: DIETClassifier
+  epochs: 100
+  constrain_similarities: true
+- name: EntitySynonymMapper
+- name: ResponseSelector
+  epochs: 100
+  constrain_similarities: true
+- name: FallbackClassifier
+  threshold: 0.75
+  ambiguity_threshold: 0.1
+
+policies:
+- name: MemoizationPolicy
+- name: RulePolicy
+- name: UnexpecTEDIntentPolicy
+  max_history: 7
+  epochs: 100
+- name: TEDPolicy
+  max_history: 7
+  epochs: 100
+  constrain_similarities: true
+assistant_id: 20250118-020317-marked-coverage
 
 intents:
   - greet
-  - goodbye
   - thank
-  - affirm
-  - deny
   - bot_challenge
   - back_to_menu
   - faq
@@ -31,64 +61,6 @@ intents:
   - telepon_sljj
   - telepon_internal
   - telepon_sli
-  - inform_agen
-  - status_ticket
-  - inform_ticket
-
-actions:
-  - validate_ticket_form
-  - action_tower
-  - action_one
-  - action_account
-  - action_app
-  - action_network
-  - action_thanks
-  - action_demo
-  - action_main
-  - action_connect
-  - action_confirm
-  - action_ticket
-  - action_help
-  - action_agent
-  - action_ask_ticket
-  - action_reset_ticket
-  - action_handle
-  - action_fallback
-
-slots:
-  ticket:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_text
-      conditions:
-        - active_loop: ticket_form
-          requested_slot: ticket
-  rating:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_text
-      conditions:
-        - active_loop: survey_form
-          requested_slot: rating
-  comment:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_text
-      conditions:
-        - active_loop: survey_form
-          requested_slot: comment
-
-forms:
-  ticket_form:
-    required_slots:
-    - ticket
-  survey_form:
-    required_slots:
-    - rating
-    - comment
 
 responses:
   utter_greet:
@@ -145,6 +117,33 @@ responses:
   utter_phone_three:
   - text: "Sesuai Surat Keputusan dengan nomor Kpts-045/C00000/2020-S0 tgl. 10 Desember 2020 Perihal Standarisasi Sarana Teknologi Informasi. Diberikan kepada Senior Vice President dan Direksi."
 
+  utter_fallback:
+  - text: "Mohon maaf, SIERA belum mengerti apa yang Sobat maksud."
+
+  utter_thanks:
+    - text: "Tidak perlu sungkan! Saya selalu siap membantu Kamu dalam menelusuri informasi yang dibutuhkan.Jika ada pertanyaan lain seputar layanan Shared Services, silakan tanyakan."
+
+  utter_faq:
+  - text: "Berikut adalah kata kunci pertanyaan yang paling sering ditanyakan:\n* Tower ICT\n* Tower Finance\n* Tower HC\n*Tower Procurement"
+
+  utter_tower_ict:
+  - text: "Apa yang ingin Sobat ketahui?\n* Layanan Account and Access\n* Layanan Application and Software\n* Layanan Network, Voice and Connectivity"
+
+  utter_tower_finance:
+  - text: "Mohon maaf informasi tower finance belum dibuat."
+
+  utter_tower_hc:
+    - text: "Mohon maaf informasi tower HC belum dibuat."
+
+  utter_tower_procurement:
+    - text: "Mohon maaf informasi procurement belum dibuat."
+
+  utter_account_access:
+    - text: "Berikut informasi tentang Account and Access yang bisa Sobat pilih.\n1. Info tentang Digital Signature\n2. Info tentang VPN\n3. Info tentang Wi-Fi"
+  utter_app_software:
+    - text: "Silahkan Sobat pilih informasi tentang Application and Software dari menu berikut ini:\n 1. Info tentang Non ERP"
+  utter_network:
+    - text: "Silahkan Sobat pilih informasi tentang Application and Software dari menu berikut ini:\n 1. Info tentang Phone"
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -155,56 +154,42 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_greet
-  - action: action_main
-
-- rule: submit form survey
-  condition:
-  - active_loop: survey_form
-  steps:
-  - action: survey_form
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  - action: utter_end
-  - action: action_help
-  - action: action_restart
 
 stories:
 - story: greet path
   steps:
   - intent: greet
   - action: utter_greet
-  - action: action_main
 
 - story: faq path
   steps:
   - intent: faq
-  - action: action_tower
+  - action: utter_faq
 
 - story: tower ict path
   steps:
   - intent: tower_ict
-  - action: action_one
+  - action: utter_tower_ict
 
 - story: tower finance path
   steps:
   - intent: tower_finance
-  - action: action_demo
+  - action: utter_tower_finance
 
 - story: tower HC path
   steps:
   - intent: tower_hc
-  - action: action_demo
+  - action: utter_tower_hc
 
 - story: tower procurement path
   steps:
   - intent: tower_procurement
-  - action: action_demo
+  - action: utter_tower_procurement
 
 - story: account & access path
   steps:
   - intent: account_access
-  - action: action_account
+  - action: utter_account_access
 
 - story: digital signature path
   steps:
@@ -215,8 +200,6 @@ stories:
   steps:
   - intent: digsign_one
   - action: utter_digsign_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: vpn path
   steps:
@@ -227,8 +210,6 @@ stories:
   steps:
   - intent: setting_vpn
   - action: utter_vpn_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: wifi path
   steps:
@@ -239,20 +220,16 @@ stories:
   steps:
   - intent: check_ip
   - action: utter_wifi_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: wifi two path
   steps:
   - intent: connection_problem
   - action: utter_wifi_two
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: app & software path
   steps:
   - intent: app_software
-  - action: action_app
+  - action: utter_app_software
 
 - story: non erp path
   steps:
@@ -263,27 +240,21 @@ stories:
   steps:
   - intent: holding_problem
   - action: utter_nonerp_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: non erp two path
   steps:
   - intent: offline_number
   - action: utter_nonerp_two
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: non erp three path
   steps:
   - intent: tatacara_poffice
   - action: utter_nonerp_three
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: network, voice & connectivity path
   steps:
   - intent: network_connect
-  - action: action_network
+  - action: utter_network
 
 - story: phone path
   steps:
@@ -294,95 +265,31 @@ stories:
   steps:
   - intent: telepon_sljj
   - action: utter_phone_one
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: phone two path
   steps:
   - intent: telepon_internal
   - action: utter_phone_two
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
 - story: phone three path
   steps:
   - intent: telepon_sli
   - action: utter_phone_three
-  - action: action_confirm
-  - checkpoint: user_satisfaction
 
-- story: user_satisfaction checkpoint yes
+- story: phone three path
   steps:
-  - checkpoint: user_satisfaction
-  - intent: affirm
-  - action: action_thanks
-  - action: survey_form
-  - active_loop: survey_form
-
-- story: user_satisfaction checkpoint no
-  steps:
-  - checkpoint: user_satisfaction
-  - intent: deny
-  - action: action_connect
-  - checkpoint: ask_agent
-
-- story: fallback path
-  steps:
-  - intent: nlu_fallback
-  - action: action_fallback
-  - checkpoint: ask_agent
-
-- story: ask_agent checkpoint yes
-  steps:
-  - checkpoint: ask_agent
-  - intent: affirm
-  - action: action_agent
-
-- story: ask_agent checkpoint no
-  steps:
-  - checkpoint: ask_agent
-  - intent: deny
-  - action: action_thanks
-  - action: survey_form
-  - active_loop: survey_form
-
-- story: chat agent path
-  steps:
-  - intent: inform_agen
-  - action: action_agent
-
-- story: cek ticket status
-  steps:
-  - intent: inform_ticket
-  - action: action_reset_ticket
-  - action: ticket_form
-  - active_loop: ticket_form
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  - action: action_handle
-  - action: action_ticket
-  - checkpoint: check_ticket_again
-
-- story: check_ticket_again yes
-  steps:
-  - checkpoint: check_ticket_again
-  - intent: affirm
-  - action: action_reset_ticket
-  - action: ticket_form
-  - active_loop: ticket_form
-
-- story: check_ticket_again no
-  steps:
-  - checkpoint: check_ticket_again
-  - intent: deny
-  - action: action_main
+  - intent: thank
+  - action: utter_thanks
 
 - story: back to beginning
   steps:
   - intent: back_to_menu
   - action: utter_greet
-  - action: action_main
+
+- story: fallback path
+  steps:
+  - intent: nlu_fallback
+  - action: utter_fallback
 
 # -------------------------------------------------------------
 # ======================== NLU ==============================
@@ -442,26 +349,6 @@ nlu:
     - Halo. Selamat sore.
     - Halo. Selamat malam.
 
-- intent: goodbye
-  examples: |
-    - dah
-    - dadah
-    - sampai jumpa
-    - sampai jumpa lagi
-    - sampai ketemu lagi
-    - bye
-    - goodbye
-    - bye bye
-    - bye bot
-    - see you
-    - see u
-    - selamat tinggal
-    - cabut dulu
-    - aku off dulu
-    - aku pergi
-    - selesai
-    - stop
-
 - intent: thank
   examples: |
     - terima kasih banyak
@@ -482,66 +369,6 @@ nlu:
     - tks
     - thx
     - thx bgt
-
-- intent: affirm
-  examples: |
-    - mau
-    - yes
-    - ya
-    - yha
-    - iya
-    - iy
-    - ok
-    - woke
-    - ok deh
-    - oke deh
-    - memang
-    - tentu
-    - tentu saja
-    - boleh juga
-    - boleh jg
-    - leh jg
-    - benar
-    - bener
-    - bnr
-    - ho oh
-    - betul
-    - betol
-    - yap
-    - boleh
-    - ok boleh
-    - bolehlah
-    - saya setuju
-    - gw setuju
-    - memang seperti itu
-
-- intent: deny
-  examples: |
-    - tidak
-    - tdk
-    - no
-    - jangan
-    - jangan begitu
-    - jangan gt
-    - janganlah
-    - bukan
-    - kurasa bukan
-    - ga
-    - gak
-    - ngga
-    - gak pernah
-    - gak mau
-    - gak mau sama sekali
-    - gak mau samsek
-    - gak juga
-    - tidak mau
-    - saya tidak berpikir begitu
-    - aku tidak berpikir begitu
-    - gak suka
-    - gak mungkin
-    - tidak mungkin
-    - tidak juga
-    - ogah
 
 - intent: bot_challenge
   examples: |
@@ -788,37 +615,5 @@ nlu:
     - siapa aja yg boleh telpon sli
     - siapa aja yang berhak dapet fasilitas telpon sli
 
-- intent: inform_agen
-  examples: |
-    - Terhubung ke Agen
-    - Konsultasi langsung dengan Agen
-    - Ingin menghubungi Agen
-    - agennya kemana
-    - ke cs dong
-    - mana csnya
-    - mau ke customer service
-    - Chat dengan Agent
-    - mau chat ke agent
-
-- intent: status_ticket
-  examples: |
-    - MOB0000002420001
-    - Tiket MOB0000002420001
-    - MOB0000002420002
-    - Tiket MOB0000002420002
-    - MOB0000002420003
-    - Tiket MOB0000002420003
-    - MOB0000002420004
-    - Tiket MOB0000002420004
-    - MOB0000002420005
-    - Tiket MOB0000002420005
-
-- intent: inform_ticket
-  examples: |
-    - Cek Tiket
-    - mau liat tiket dong
-    - mau check ticket dong
-    - check ticket
-    - tiket gw apa aja
 
 # -----------------------------------------------------------

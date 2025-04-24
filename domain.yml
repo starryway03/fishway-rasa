@@ -2,10 +2,7 @@ version: "3.1"
 
 intents:
   - greet
-  - goodbye
   - thank
-  - affirm
-  - deny
   - bot_challenge
   - back_to_menu
   - faq
@@ -31,64 +28,7 @@ intents:
   - telepon_sljj
   - telepon_internal
   - telepon_sli
-  - inform_agen
-  - status_ticket
-  - inform_ticket
 
-actions:
-  - validate_ticket_form
-  - action_tower
-  - action_one
-  - action_account
-  - action_app
-  - action_network
-  - action_thanks
-  - action_demo
-  - action_main
-  - action_connect
-  - action_confirm
-  - action_ticket
-  - action_help
-  - action_agent
-  - action_ask_ticket
-  - action_reset_ticket
-  - action_handle
-  - action_fallback
-
-slots:
-  ticket:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_text
-      conditions:
-        - active_loop: ticket_form
-          requested_slot: ticket
-  rating:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_text
-      conditions:
-        - active_loop: survey_form
-          requested_slot: rating
-  comment:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_text
-      conditions:
-        - active_loop: survey_form
-          requested_slot: comment
-
-forms:
-  ticket_form:
-    required_slots:
-    - ticket
-  survey_form:
-    required_slots:
-    - rating
-    - comment
 
 responses:
   utter_greet:
@@ -144,6 +84,34 @@ responses:
 
   utter_phone_three:
   - text: "Sesuai Surat Keputusan dengan nomor Kpts-045/C00000/2020-S0 tgl. 10 Desember 2020 Perihal Standarisasi Sarana Teknologi Informasi. Diberikan kepada Senior Vice President dan Direksi."
+
+  utter_fallback:
+  - text: "Mohon maaf, SIERA belum mengerti apa yang Sobat maksud."
+
+  utter_thanks:
+    - text: "Tidak perlu sungkan! Saya selalu siap membantu Kamu dalam menelusuri informasi yang dibutuhkan.Jika ada pertanyaan lain seputar layanan Shared Services, silakan tanyakan."
+
+  utter_faq:
+  - text: "Berikut adalah kata kunci pertanyaan yang paling sering ditanyakan:\n* Tower ICT\n* Tower Finance\n* Tower HC\n*Tower Procurement"
+
+  utter_tower_ict:
+  - text: "Apa yang ingin Sobat ketahui?\n* Layanan Account and Access\n* Layanan Application and Software\n* Layanan Network, Voice and Connectivity"
+
+  utter_tower_finance:
+  - text: "Mohon maaf informasi tower finance belum dibuat."
+
+  utter_tower_hc:
+    - text: "Mohon maaf informasi tower HC belum dibuat."
+
+  utter_tower_procurement:
+    - text: "Mohon maaf informasi procurement belum dibuat."
+
+  utter_account_access:
+    - text: "Berikut informasi tentang Account and Access yang bisa Sobat pilih.\n1. Info tentang Digital Signature\n2. Info tentang VPN\n3. Info tentang Wi-Fi"
+  utter_app_software:
+    - text: "Silahkan Sobat pilih informasi tentang Application and Software dari menu berikut ini:\n 1. Info tentang Non ERP"
+  utter_network:
+    - text: "Silahkan Sobat pilih informasi tentang Application and Software dari menu berikut ini:\n 1. Info tentang Phone"
 
 session_config:
   session_expiration_time: 60
